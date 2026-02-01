@@ -97,7 +97,11 @@ export const { getInitConnector, setInitConnector, checkInitConnector, reuseAnyC
       return false;
     }
 
-    const newConnector = initConnector.clone();
+    const initConnectorFrame = initConnector.parent as FrameNode;
+
+    const newConnectorFrame = initConnectorFrame.clone();
+
+    const newConnector = newConnectorFrame.findOne((node) => node.type === 'CONNECTOR') as ConnectorNode;
 
     if (newConnector.text.characters) {
       const connectorFont = newConnector.text.fontName as FontName;
@@ -120,6 +124,7 @@ export const { getInitConnector, setInitConnector, checkInitConnector, reuseAnyC
         opacity: 0.8,
       },
     ];
+    newConnectorFrame.remove();
     figma.currentPage.selection = [newConnector];
     return true;
   }

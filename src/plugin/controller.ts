@@ -9,12 +9,20 @@ function initConnectorHandler() {
   if (nodes.length === 1 && nodes[0].type === 'CONNECTOR') {
     const arrow = nodes[0];
     figma.currentPage.selection = [];
-    figma.currentPage.insertChild(0, arrow);
     arrow.x = -131100;
     arrow.y = -131100;
     arrow.visible = false;
     arrow.locked = true;
     arrow.name = '_flow-init-connector';
+    const frame = figma.createFrame();
+    frame.name = '_flow-init-connector-frame';
+    frame.resize(100, 100);
+    frame.x = -131100;
+    frame.y = -131100;
+    frame.visible = false;
+    frame.locked = true;
+    frame.appendChild(arrow);
+    figma.currentPage.insertChild(0, frame);
     setInitConnector(arrow);
     sendUIAction('SET_STANDBY');
   }
